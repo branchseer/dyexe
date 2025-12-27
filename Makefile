@@ -23,10 +23,12 @@ $(BUILD_DIR)/test_loader: test_loader.c
 	$(CC) $(CFLAGS) -o $(BUILD_DIR)/test_loader test_loader.c
 
 test: all
-	@echo "=== Running as executable ==="
-	$(BUILD_DIR)/dyexe test args
+	@echo "=== Test 1: Executable mode ==="
 	@echo ""
-	@echo "=== Loading as dynamic library ==="
+	./test_executable.sh $(BUILD_DIR)/dyexe
+	@echo ""
+	@echo "=== Test 2: Library mode ==="
+	@echo ""
 	$(BUILD_DIR)/test_loader $(BUILD_DIR)/dyexe
 
 clean:

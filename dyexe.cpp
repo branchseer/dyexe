@@ -16,15 +16,8 @@ extern "C" {
 
 // Executable entry point
 int main(int argc, char *argv[]) {
-    printf("Running as executable!\n");
-    printf("Timestamp: %lld\n", dyexe_get_time());
-
-    if (argc > 1) {
-        printf("\nArguments received:\n");
-        for (int i = 1; i < argc; i++) {
-            printf("  arg[%d]: %s\n", i, argv[i]);
-        }
-    }
-
+    (void)argc;
+    (void)argv;
+    printf("%lld\n", dyexe_get_time());
     return 0;
 }

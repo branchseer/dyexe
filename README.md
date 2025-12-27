@@ -17,22 +17,25 @@ The binary is built as a Position Independent Executable (PIE) with exported sym
 make
 ```
 
-This creates:
-- `dyexe` - The dual-purpose binary
-- `test_loader` - A test program that loads dyexe as a library
+This creates binaries in the `build/` directory:
+- `build/dyexe` - The dual-purpose binary
+- `build/test_loader` - A test program that loads dyexe as a library
 
 ## Usage
 
 ### As an Executable
 
+The executable prints a Unix timestamp (seconds since epoch) to stdout:
+
 ```bash
-./dyexe [args...]
+build/dyexe
+# Output: 1766845603
 ```
 
 ### As a Dynamic Library
 
 ```bash
-./test_loader ./dyexe
+build/test_loader build/dyexe
 ```
 
 Or programmatically in C:
@@ -46,8 +49,27 @@ dlclose(handle);
 
 ## Testing
 
+Run all tests:
+
 ```bash
 make test
+```
+
+This runs:
+1. **Executable test** (`test_executable.sh`): Spawns the executable, captures stdout, and verifies the timestamp is close to current time
+2. **Library test** (`test_loader`):
+   - Loads dyexe as a dynamic library
+   - Calls `dyexe_get_time()` twice and verifies both calls return the same value
+   - Verifies the timestamp is close to current time
+
+Run individual tests:
+
+```bash
+# Test executable mode
+./test_executable.sh build/dyexe
+
+# Test library mode
+build/test_loader build/dyexe
 ```
 
 ## API Functions
